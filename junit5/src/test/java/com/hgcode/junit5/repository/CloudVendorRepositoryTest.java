@@ -41,4 +41,9 @@ public class CloudVendorRepositoryTest {
         assertThat(cloudVendors.get(0).getVendorAddress()).isEqualTo(cloudVendor.getVendorAddress());
     }
     // Test case Failure
+    @Test
+    void findByVendorName_NotFound(){
+        List<CloudVendor> cloudVendors = cloudVendorRepository.findByVendorName("Google");
+        assertThat(cloudVendors.isEmpty()).isTrue();
+    }
 }
