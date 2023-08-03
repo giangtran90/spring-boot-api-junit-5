@@ -9,6 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -49,7 +54,7 @@ class CloudVendorServiceImplTest {
     }
 
     @Test
-    void updateCloudVendor() {
+    void testUpdateCloudVendor() {
         mock(CloudVendor.class);
         mock(CloudVendorRepository.class);
 
@@ -59,11 +64,27 @@ class CloudVendorServiceImplTest {
     }
 
     @Test
-    void deleteCloudVendor() {
+    void testGetCloudVendor() {
+        mock(CloudVendor.class);
+        mock(CloudVendorRepository.class);
+
+        when(cloudVendorRepository.findById("1")).thenReturn(Optional.ofNullable(cloudVendor));
+
+        assertThat(cloudVendorService.getCloudVendor("1").getVendorName())
+                .isEqualTo(cloudVendor.getVendorName());
     }
 
     @Test
-    void getCloudVendor() {
+    void testGetByVendorName() {
+        mock(CloudVendor.class);
+        mock(CloudVendorRepository.class);
+
+        when(cloudVendorRepository.findByVendorName("Amazon")).thenReturn(
+          new ArrayList<CloudVendor>(Collections.singleton(cloudVendor))
+        );
+
+        assertThat(cloudVendorService.getByVendorName("Amazon").get(0).getVendorId())
+                .isEqualTo(cloudVendor.getVendorId());
     }
 
     @Test
@@ -71,6 +92,6 @@ class CloudVendorServiceImplTest {
     }
 
     @Test
-    void getByVendorName() {
+    void deleteCloudVendor() {
     }
 }
