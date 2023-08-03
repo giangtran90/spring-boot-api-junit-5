@@ -54,8 +54,12 @@ class CloudVendorControllerTest {
     }
 
     @Test
-    void getAllCloudVendorDetails() {
-
+    void testGetAllCloudVendorDetails() throws Exception {
+        when(cloudVendorService.getAllCloudVendors())
+                .thenReturn(cloudVendorList);
+        this.mockMvc.perform(get("/cloudvendor/"))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
