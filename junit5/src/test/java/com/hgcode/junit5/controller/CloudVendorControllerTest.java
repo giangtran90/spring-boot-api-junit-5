@@ -71,6 +71,11 @@ class CloudVendorControllerTest {
     }
 
     @Test
-    void deleteCloudVendorDetails() {
+    void testDeleteCloudVendorDetails() throws Exception {
+        when(cloudVendorService.deleteCloudVendor("1"))
+                .thenReturn("Success");
+        this.mockMvc.perform(delete("/cloudvendor/1"))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }
