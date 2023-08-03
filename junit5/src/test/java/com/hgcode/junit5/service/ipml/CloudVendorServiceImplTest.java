@@ -6,7 +6,9 @@ import com.hgcode.junit5.service.CloudVendorService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Answers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -15,8 +17,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CloudVendorServiceImplTest {
 
@@ -101,6 +102,14 @@ class CloudVendorServiceImplTest {
     }
 
     @Test
-    void deleteCloudVendor() {
+    void testDeleteCloudVendor() {
+        mock(CloudVendor.class);
+        mock(CloudVendorRepository.class, Mockito.CALLS_REAL_METHODS);
+
+        // tra loi ben trong doAnswer
+        doAnswer(Answers.CALLS_REAL_METHODS).when(
+          cloudVendorRepository).deleteById(any());
+
+        assertThat(cloudVendorService.deleteCloudVendor("1")).isEqualTo("Success");
     }
 }
