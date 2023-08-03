@@ -50,6 +50,12 @@ class CloudVendorServiceImplTest {
 
     @Test
     void updateCloudVendor() {
+        mock(CloudVendor.class);
+        mock(CloudVendorRepository.class);
+
+        when(cloudVendorRepository.save(cloudVendor)).thenReturn(cloudVendor);
+
+        assertThat(cloudVendorService.updateCloudVendor(cloudVendor)).isEqualTo("Success");
     }
 
     @Test
